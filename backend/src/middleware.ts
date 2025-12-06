@@ -1,6 +1,7 @@
-import  jwt  from 'jsonwebtoken';
+import  jwt, { type JwtPayload }  from 'jsonwebtoken';
 import type { NextFunction, Request, Response } from "express";
 import { jwtSecret } from './index.js';
+
 
 
 
@@ -15,8 +16,7 @@ export const userMiddleware=(req:Request,res:Response,next:NextFunction)=>{
             throw new Error("Invalid token")
         }
         if(payload){
-            //@ts-ignore
-            req.userId=payload.id
+            req.userId=(payload as JwtPayload).id
             next()
         }
         
